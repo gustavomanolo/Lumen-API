@@ -14,15 +14,11 @@ class CursoMigration extends Migration
     {
         Schema::create('cursos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
             $table->string('titulo');
             $table->string('descripcion');
             $table->integer('valor');
-
-            //-> Foreign key
             $table->integer('profesor_id')->unsigned();
             $table->foreign('profesor_id')->references('id')->on('profesores');
-
             $table->timestamps();
         });
     }

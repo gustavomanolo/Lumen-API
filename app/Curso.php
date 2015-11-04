@@ -17,7 +17,8 @@
 		}
 
 		//-> N:N relation
-		public function estudiantes(){
-			$this->belongsToMany('App\Estudiante');
+		public function estudiantes()
+		{
+			return $this->belongsToMany('App\Estudiante');
 		}
 	}
