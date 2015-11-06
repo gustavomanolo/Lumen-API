@@ -68,7 +68,24 @@
 		}
 
 
+		public function destroy( $profesor_id ){
+			$profesor = Profesor::find( $profesor_id );
+			if( $profesor ){
+				//-> Sync model to be able to delete "foreign keys"
+				//$profesor->cursos()->sync([]);
 
+				if( $profesor->cursos()>0 ){
+					//-> Can't delete profesor's if there're courses related to him (MUST DELETE FIRST THE COURSES)
+					$this->crearRespuestaError("El profesor tiene cursos asociados. Se deben eliminar primero los cursos", 409);
+				}
+
+				$profesor->delete();
+
+				return $this->crearRespuesta("El profesor ha sido eliminado", 200);
+			}
+
+			return $this->crearRespuestaError("No se eocntró el profesor con id $profesor_id", 404);
+		}
 
 
 		//-> *** Common function to validate Request parameters

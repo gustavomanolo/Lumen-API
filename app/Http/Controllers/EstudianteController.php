@@ -7,9 +7,9 @@
 	class EstudianteController extends Controller{
 		
 		public function index(){
-			$cursos = Estudiante::all();
+			$estudiante = Estudiante::all();
 
-			return $this->crearRespuesta( $cursos, 200);
+			return $this->crearRespuesta( $estudiante, 200);
 
 		}
 
@@ -69,6 +69,19 @@
 		}
 
 
+		public function destroy( $estudiante_id ){
+			$estudiante = Estudiante::find( $estudiante_id );
+			if( $estudiante ){
+				//-> Sync model to be able to delete "foreign keys"
+				$estudiante->cursos()->sync([]);
+
+				$estudiante->delete();
+
+				return $this->crearRespuesta("El estudiante ha sido eliminado", 200);
+			}
+
+			return $this->crearRespuestaError("No se eocntró el estudiante con id $estudiante_id", 404);
+		}
 
 
 
