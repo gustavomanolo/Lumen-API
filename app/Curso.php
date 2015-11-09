@@ -7,7 +7,7 @@
 		//-> ** Set manual name to table
 		protected $table = "cursos";
 
-		protected $fillable = ['titulo', 'descripcion', 'valor'];
+		protected $fillable = ['titulo', 'descripcion', 'valor', 'profesor_id'];
 
 		protected $hidden = ['id', 'created_at', 'updated_at'];
 
