@@ -19,10 +19,9 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-//-> For "oauth2-server-lumen"
-class_alias('Illuminate\Support\Facades\Config', 'Config');
-
-$app->withFacades();
+//-> For "oauth2-server-lumen" (*** ONLY ENABLE WHEN DOING "MIGRATIONS" AND "SEEDS")
+// class_alias('Illuminate\Support\Facades\Config', 'Config');
+// $app->withFacades();
 
 $app->withEloquent();
 

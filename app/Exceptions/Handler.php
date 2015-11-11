@@ -6,6 +6,8 @@ use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 class Handler extends ExceptionHandler
 {
     /**
@@ -18,7 +20,7 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
+     * Report or log an exception. in (lumen.log)
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
@@ -39,6 +41,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
-        return parent::render($request, $e);
+        if( env('APP_DEBUG') ){
+            return parent::render($request, $e);
+        }
+
+        if($e instanceof NotFoundHttpException){
+            return response()->json(['message'=>"Petición inválida", 'code'=>400], 400);
+        }
+
+        //-> Something else 
+        return response()->json(['message'=>"Código inesperado", 'code'=>500], 500);
+
     }
 }
