@@ -47,6 +47,12 @@ $app->post('/cursos/{cursos}/estudiantes/{estudiantes}', 'CursoEstudianteControl
 $app->delete('/cursos/{cursos}/estudiantes/{estudiantes}', 'CursoEstudianteController@destroy');
 
 
+
+$app->post('oauth/access_token', function() use($app){
+	//-> Uses the facade "oauth2-server.authorizer"
+	return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
+});
+
 // $app->post('/oauth/access_token', function() use($app) {
 //     return response()->json($app->make('oauth2-server.authorizer')->issueAccessToken());
 // });

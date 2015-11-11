@@ -5,7 +5,10 @@
 	use Illuminate\Http\Request;
 
 	class ProfesorController extends Controller{
-		
+		public function __construct(){
+			$this->middleware('oauth', ['except'=>['index']]);
+		}
+
 		public function index(){
 			$cursos = Profesor::all();
 			// return response()->json(['data'=>$cursos], 200);
@@ -74,7 +77,7 @@
 				//-> Sync model to be able to delete "foreign keys"
 				//$profesor->cursos()->sync([]);
 
-				if( $profesor->cursos()>0 ){
+				if( count($profesor->cursos())>0 ){
 					//-> Can't delete profesor's if there're courses related to him (MUST DELETE FIRST THE COURSES)
 					$this->crearRespuestaError("El profesor tiene cursos asociados. Se deben eliminar primero los cursos", 409);
 				}
